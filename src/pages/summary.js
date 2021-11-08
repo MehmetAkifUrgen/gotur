@@ -3,7 +3,7 @@ import {Text, View} from 'react-native';
 
 const Summary = ({params}) => (
   <View>
-    <Text>componentName</Text>
+    <Text>Summary</Text>
   </View>
 );
 
