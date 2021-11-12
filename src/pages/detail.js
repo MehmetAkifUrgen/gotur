@@ -1,10 +1,28 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, StyleSheet, Image, Dimensions} from 'react-native';
-
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  Dimensions,
+  Button,
+  TouchableOpacity,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const Detail = ({route, navigation}) => {
   const {title, price, img, product} = route.params;
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={styles.headerView}
+          onPress={() => navigation.push('Summary')}>
+          <Icon size={30} name="basket"></Icon>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   return (
     <View style={styles.container}>

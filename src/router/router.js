@@ -100,7 +100,9 @@ const HomeStackNavigator = ({navigation}) => {
       backgroundColor: 'white',
     },
     headerRight: ({color, size}) => (
-      <TouchableOpacity style={styles.headerView} onPress={goDetail}>
+      <TouchableOpacity
+        style={styles.headerView}
+        onPress={() => navigation.push('Summary')}>
         <Icon color={color} size={30} name="basket"></Icon>
       </TouchableOpacity>
     ),

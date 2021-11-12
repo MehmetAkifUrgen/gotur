@@ -1,7 +1,7 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, Button} from 'react-native';
 
-const Summary = ({params}) => (
+const Summary = ({navigation}) => (
   <View>
     <Text>Summary</Text>
   </View>
