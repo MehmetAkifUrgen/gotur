@@ -135,7 +135,7 @@ const HomeStackNavigator = ({navigation}) => {
   };
 
   return (
-    <Provider store={createStore(reducers, initialState)}>
+    <Provider store={initialState}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={screenOptionStyle}>
           <Stack.Screen name="Home" component={BottomTabNavigator} />

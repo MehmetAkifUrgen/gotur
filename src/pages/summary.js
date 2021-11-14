@@ -10,19 +10,23 @@ import {
 import {useSelector, useDispatch} from 'react-redux';
 import Number from '../components/number';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {plus, minus} from '../redux/reducers';
 
 const Summary = ({navigation}) => {
   const dispatch = useDispatch();
 
-  const counter = useSelector(selector => selector.arr);
+  const selector = useSelector(state => state.sepet.arr);
 
-  const renderItem = ({item}) => {
+  const renderItem = ({item, index}) => {
     return (
       <View style={styles.itemContainer}>
         <Text style={styles.text}> {item.ad} </Text>
         <Text style={styles.text}> {item.adet} </Text>
         <Text style={styles.text}> {item.fiyat} </Text>
-        <Number />
+        <Number
+          onPress1={() => dispatch(minus(index))}
+          onPress2={() => dispatch(plus(index))}
+        />
       </View>
     );
   };
@@ -39,7 +43,7 @@ const Summary = ({navigation}) => {
     <View style={styles.container}>
       <FlatList
         ListHeaderComponent={listHeaderComponent}
-        data={counter}
+        data={selector}
         keyExtractor={(_, index) => index}
         renderItem={renderItem}
       />

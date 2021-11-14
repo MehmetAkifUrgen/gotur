@@ -1,6 +1,7 @@
 import React, {useLayoutEffect, useState} from 'react';
 import Number from '../components/number';
 import {useSelector, useDispatch} from 'react-redux';
+import {incrementByAmount} from '../redux/reducers';
 import {
   Text,
   View,
@@ -15,17 +16,18 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const Detail = ({route, navigation}) => {
   const dispatch = useDispatch();
 
-  const counter = useSelector(selector => selector.arr);
+  const selector = useSelector(state => state.sepet.arr);
 
   const [number, setNumber] = useState(0);
+  const [id, setId] = useState(0);
   const {title, price, img, product} = route.params;
-  const insert = value => {
-    dispatch({
-      type: 'down_counter',
-      newItem: {ad: title, adet: number, fiyat: price, id: 0},
-    });
+  const insert = () => {
+    dispatch(
+      incrementByAmount({ad: title, adet: number, fiyat: price, id: id}),
+    );
+    setId(id + 1);
   };
-  console.log(counter);
+  console.log(selector);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
