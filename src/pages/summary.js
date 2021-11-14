@@ -14,12 +14,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const Summary = ({navigation}) => {
   const dispatch = useDispatch();
 
-  const plus = index => {
-    dispatch(index, {
-      type: 'add',
-    });
-  };
-
   const counter = useSelector(selector => selector.arr);
 
   const renderItem = ({item}) => {
@@ -28,7 +22,7 @@ const Summary = ({navigation}) => {
         <Text style={styles.text}> {item.ad} </Text>
         <Text style={styles.text}> {item.adet} </Text>
         <Text style={styles.text}> {item.fiyat} </Text>
-        <Number onPress2={plus(item.id)} />
+        <Number />
       </View>
     );
   };
