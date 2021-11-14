@@ -1,4 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
+import Number from '../components/number';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
   View,
@@ -11,8 +13,20 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const Detail = ({route, navigation}) => {
+  const dispatch = useDispatch();
+
+  const counter = useSelector(selector => selector.arr);
+
+  const [number, setNumber] = useState(0);
   const {title, price, img, product} = route.params;
-  React.useLayoutEffect(() => {
+  const insert = value => {
+    dispatch({
+      type: 'down_counter',
+      newItem: {ad: title, adet: number, fiyat: price, id: 0},
+    });
+  };
+  console.log(counter);
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
@@ -34,8 +48,17 @@ const Detail = ({route, navigation}) => {
         </View>
       </View>
       <View style={styles.buton}>
-        <Text style={styles.price}> {price}$ </Text>
-        <Icon.Button name="basket" backgroundColor="orange" solid>
+        <Text style={styles.price}> {price}₺ </Text>
+        <Number
+          onPress2={() => setNumber(number + 1)}
+          onPress1={() => (number == 0 ? null : setNumber(number - 1))}
+          text={number}
+        />
+        <Icon.Button
+          onPress={insert}
+          name="basket"
+          backgroundColor="#8F7321"
+          solid>
           Insert to Your Basket
         </Icon.Button>
       </View>

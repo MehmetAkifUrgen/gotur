@@ -12,6 +12,10 @@ import Summary from '../pages/summary';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Detail from '../pages/detail';
+import {createStore} from 'redux';
+import {Provider, useSelector, useDispatch} from 'react-redux';
+import reducers from '../redux/reducers';
+import initialState from '../redux/store';
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = ({navigation}) => {
@@ -19,28 +23,32 @@ const BottomTabNavigator = ({navigation}) => {
     navigation.push('Summary');
   };
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarInactiveBackgroundColor: '#1A8F72',
+        tabBarActiveBackgroundColor: '#CE53DB',
+      }}>
       <Tab.Screen
         name="Main"
         component={Main}
         options={{
-          headerTintColor: 'black',
+          headerTintColor: 'white',
           headerTitleAlign: 'center',
-          headerTitle: 'GÖTÜR',
+          headerTitle: 'Götür',
           headerTitleStyle: {
             fontSize: 20,
           },
           headerStyle: {
-            backgroundColor: 'white',
+            backgroundColor: '#3DDBB4',
           },
           headerRight: ({color, size}) => (
             <TouchableOpacity style={styles.headerView} onPress={goDetail}>
-              <Icon color={color} size={30} name="basket"></Icon>
+              <Icon color={'white'} size={30} name="basket"></Icon>
             </TouchableOpacity>
           ),
           tabBarLabel: '',
           tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
+            <MaterialCommunityIcons name="home" color={'white'} size={size} />
           ),
         }}
       />
@@ -48,9 +56,18 @@ const BottomTabNavigator = ({navigation}) => {
         name="Summary"
         component={Summary}
         options={{
+          headerTintColor: 'white',
+          headerTitleAlign: 'center',
+          headerTitle: 'Sepetim',
+          headerTitleStyle: {
+            fontSize: 20,
+          },
+          headerStyle: {
+            backgroundColor: '#3DDBB4',
+          },
           tabBarLabel: '',
           tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="basket" color={color} size={size} />
+            <MaterialCommunityIcons name="basket" color={'white'} size={size} />
           ),
         }}
       />
@@ -59,11 +76,20 @@ const BottomTabNavigator = ({navigation}) => {
         name="Done"
         component={Done}
         options={{
+          headerTintColor: 'white',
+          headerTitleAlign: 'center',
+          headerTitle: 'Tamamlanan Siparişler',
+          headerTitleStyle: {
+            fontSize: 20,
+          },
+          headerStyle: {
+            backgroundColor: '#3DDBB4',
+          },
           tabBarLabel: '',
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons
               name="check-all"
-              color={color}
+              color={'white'}
               size={size}
             />
           ),
@@ -109,14 +135,16 @@ const HomeStackNavigator = ({navigation}) => {
   };
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={screenOptionStyle}>
-        <Stack.Screen name="Home" component={BottomTabNavigator} />
-        <Stack.Screen options={options} name="Detail" component={Detail} />
-        <Stack.Screen name="Summary" component={Summary} />
-        <Stack.Screen name="Done" component={Done} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={createStore(reducers, initialState)}>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={screenOptionStyle}>
+          <Stack.Screen name="Home" component={BottomTabNavigator} />
+          <Stack.Screen options={options} name="Detail" component={Detail} />
+          <Stack.Screen name="Summary" component={Summary} />
+          <Stack.Screen name="Done" component={Done} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 const styles = StyleSheet.create({

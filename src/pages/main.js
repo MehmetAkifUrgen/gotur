@@ -21,12 +21,12 @@ const Main = ({navigation}) => {
         onPress={() => navigation.push('Detail', {title, img, price, product})}
         style={styles.button}>
         <Image
-          resizeMode={'stretch'}
+          resizeMode={'contain'}
           style={styles.image}
           source={{uri: item.imgURL}}
         />
         <Text style={styles.text}>{item.title}</Text>
-        <Text style={styles.price}>Price : {parseInt(item.price / 9.5)}$</Text>
+        <Text style={styles.price}>Price : {item.price}₺</Text>
       </TouchableOpacity>
     );
   };
@@ -45,7 +45,7 @@ const Main = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff1ff',
+    backgroundColor: 'white',
   },
   image: {
     width: Dimensions.get('screen').width / 2.5,
@@ -59,6 +59,8 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: 'white',
     borderRadius: 20,
+    borderColor: '#DBAE27',
+    borderWidth: 2,
   },
   text: {
     fontSize: 18,
@@ -67,7 +69,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   price: {
-    color: 'grey',
+    color: '#1A8F72',
     fontSize: 16,
   },
 });
