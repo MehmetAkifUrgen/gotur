@@ -1,11 +1,15 @@
 import React from 'react';
-import {Text, View, FlatList, StyleSheet} from 'react-native';
+import {Text, View, FlatList, StyleSheet, Dimensions} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import ListHeaderComponent from '../components/listHeaderComponent';
 const Done = ({params}) => {
   const dones = useSelector(state => state.sepet.done);
-  function listHeaderComponent() {
-    return <ListHeaderComponent />;
+  const sumAll = useSelector(state => state.sepet.sumAll);
+  function ItemSeparatorComponent() {
+    return <View style={styles.ItemSeparatorComponent}></View>;
+  }
+  function listFooterComponent() {
+    return <Text>dasdsad</Text>;
   }
 
   function detail_items({item}) {
@@ -20,8 +24,10 @@ const Done = ({params}) => {
   function renderItem({item, index}) {
     return (
       <View style={styles.listContainer}>
-        <Text>Sipariş : {index + 1} </Text>
+        <Text>{index + 1}.Sipariş </Text>
+        <Text>Toplam: {sumAll[index]} </Text>
         <FlatList
+          ItemSeparatorComponent={ItemSeparatorComponent}
           data={item}
           keyExtractor={(_, index) => index}
           renderItem={detail_items}
@@ -32,7 +38,6 @@ const Done = ({params}) => {
   return (
     <View style={styles.container}>
       <FlatList
-        ListHeaderComponent={listHeaderComponent}
         data={dones}
         keyExtractor={(_, index) => index}
         renderItem={renderItem}
@@ -61,8 +66,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
+    width: Dimensions.get('window').width / 4,
     fontSize: 18,
     color: 'black',
+    textAlign: 'center',
+  },
+  ItemSeparatorComponent: {
+    height: 1,
+    backgroundColor: 'black',
   },
 });
 

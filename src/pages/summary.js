@@ -27,7 +27,8 @@ const Summary = ({navigation}) => {
   const dispatch = useDispatch();
 
   const sums = useSelector(state => state.sepet.sum);
-  console.log(sums);
+  const son = useSelector(state => state.sepet.done);
+  console.log(son);
   function listFooterComponent() {
     return <Text>Toplam :{sums} </Text>;
   }
