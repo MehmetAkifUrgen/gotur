@@ -28,7 +28,6 @@ const First = () => {
 const Second = () => {
   const a = 'asdasd';
 
-  console.log(counter);
   return (
     <View style={{flex: 1, backgroundColor: '#fffeee'}}>
       <Text style={{fontSize: 45}}> Second: {counter[0]} </Text>

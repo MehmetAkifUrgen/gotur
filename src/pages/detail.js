@@ -1,14 +1,14 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useLayoutEffect, useState, useEffect} from 'react';
 import Number from '../components/number';
 import {useSelector, useDispatch} from 'react-redux';
-import {incrementByAmount} from '../redux/reducers';
+import {incrementByAmount, reduction, sum} from '../redux/reducers';
 import {
   Text,
   View,
   StyleSheet,
   Image,
   Dimensions,
-  Button,
+  Alert,
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -16,28 +16,33 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const Detail = ({route, navigation}) => {
   const dispatch = useDispatch();
 
-  const selector = useSelector(state => state.sepet.arr);
+  const selector = useSelector(state => state.sepet.sepet);
 
   const [number, setNumber] = useState(0);
-  const [id, setId] = useState(0);
+
   const {title, price, img, product} = route.params;
   const insert = () => {
-    dispatch(
-      incrementByAmount({ad: title, adet: number, fiyat: price, id: id}),
-    );
-    setId(id + 1);
+    if (number != 0) {
+      dispatch(incrementByAmount({ad: title, adet: number, fiyat: price}));
+      dispatch(reduction());
+    } else {
+      Alert.alert('Adet sayısı en az 1 olmalıdır!');
+    }
   };
-  console.log(selector);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
           style={styles.headerView}
-          onPress={() => navigation.push('Summary')}>
+          onPress={() => navigation.navigate('Home', {screen: 'Summary'})}>
           <Icon size={30} name="basket"></Icon>
         </TouchableOpacity>
       ),
     });
+    return () => {
+      setNumber(0);
+    };
   }, [navigation]);
 
   return (

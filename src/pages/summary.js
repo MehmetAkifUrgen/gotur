@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -10,12 +10,32 @@ import {
 import {useSelector, useDispatch} from 'react-redux';
 import Number from '../components/number';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {plus, minus} from '../redux/reducers';
+import {plus, minus, done, delete_all, reduction} from '../redux/reducers';
+import ListHeaderComponent from '../components/listHeaderComponent';
 
 const Summary = ({navigation}) => {
+  const [toplam, setToplam] = useState(0);
+  useEffect(() => {
+    dispatch(reduction());
+  }, []);
+
+  function end_of_shopping() {
+    dispatch(done());
+    dispatch(delete_all());
+  }
+
   const dispatch = useDispatch();
 
-  const selector = useSelector(state => state.sepet.arr);
+  const sums = useSelector(state => state.sepet.sum);
+  console.log(sums);
+  function listFooterComponent() {
+    return <Text>Toplam :{sums} </Text>;
+  }
+  function ItemSeparatorComponent() {
+    return <View style={styles.ItemSeparatorComponent}></View>;
+  }
+
+  const sepet = useSelector(state => state.sepet.sepet);
 
   const renderItem = ({item, index}) => {
     return (
@@ -31,24 +51,23 @@ const Summary = ({navigation}) => {
     );
   };
   const listHeaderComponent = () => {
-    return (
-      <View style={styles.headTextContainer}>
-        <Text style={styles.text}>Ürün Adı</Text>
-        <Text style={styles.text}>Adet</Text>
-        <Text style={styles.text}>Adet Fiyatı</Text>
-      </View>
-    );
+    return <ListHeaderComponent />;
   };
   return (
     <View style={styles.container}>
       <FlatList
+        ItemSeparatorComponent={ItemSeparatorComponent}
         ListHeaderComponent={listHeaderComponent}
-        data={selector}
+        data={sepet}
         keyExtractor={(_, index) => index}
         renderItem={renderItem}
+        ListFooterComponent={listFooterComponent}
       />
       <View style={styles.button}>
-        <Icon.Button name="basket-unfill" backgroundColor="#8F7321">
+        <Icon.Button
+          onPress={end_of_shopping}
+          name="basket-unfill"
+          backgroundColor="#8F7321">
           Siparişi Tamamla
         </Icon.Button>
       </View>
@@ -62,6 +81,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     margin: 5,
+  },
+  ItemSeparatorComponent: {
+    height: 1,
+    backgroundColor: 'black',
   },
   headTextContainer: {
     flexDirection: 'row',

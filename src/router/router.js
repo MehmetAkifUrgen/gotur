@@ -20,7 +20,7 @@ const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = ({navigation}) => {
   const goDetail = () => {
-    navigation.push('Summary');
+    navigation.navigate('Home', {screen: 'Summary'});
   };
   return (
     <Tab.Navigator
@@ -105,15 +105,6 @@ const screenOptionStyle = {
 };
 
 const HomeStackNavigator = ({navigation}) => {
-  const navigationRef = useNavigationContainerRef();
-  const goDetail = () => {
-    if (navigationRef.isReady()) {
-      navigationRef.navigate('Summary');
-    } else {
-      // You can decide what to do if react navigation is not ready
-      // You can ignore this, or add these actions to a queue you can call later
-    }
-  };
   const options = {
     headerShown: true,
     headerTintColor: 'black',
@@ -128,7 +119,7 @@ const HomeStackNavigator = ({navigation}) => {
     headerRight: ({color, size}) => (
       <TouchableOpacity
         style={styles.headerView}
-        onPress={() => navigation.push('Summary')}>
+        onPress={() => navigation.navigate('Summary')}>
         <Icon color={color} size={30} name="basket"></Icon>
       </TouchableOpacity>
     ),
