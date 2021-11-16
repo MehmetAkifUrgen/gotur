@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Number = ({text, minus, plus, color}) => {
+const Number = ({text, minus, plus}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={minus}>
