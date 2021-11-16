@@ -20,7 +20,7 @@ const Summary = () => {
   const sums = useSelector(state => state.sepet.sum);
   function listFooterComponent() {
     if (sums != 0)
-      return <Text style={styles.listFooterText}>Toplam :{sums} </Text>;
+      return <Text style={styles.listFooterText}>Toplam :{sums} ₺ </Text>;
     else return null;
   }
 
