@@ -18,7 +18,9 @@ const Main = ({navigation}) => {
     const product = item.product;
     return (
       <TouchableOpacity
-        onPress={() => navigation.push('Detail', {title, img, price, product})}
+        onPress={() =>
+          navigation.push('Detaylar', {title, img, price, product})
+        }
         style={styles.button}>
         <Image
           resizeMode={'contain'}

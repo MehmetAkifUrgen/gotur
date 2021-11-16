@@ -2,25 +2,20 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {
-  NavigationContainer,
-  useNavigationContainerRef,
-} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import Main from '../pages/main';
 import Done from '../pages/done';
 import Summary from '../pages/summary';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Detail from '../pages/detail';
-import {createStore} from 'redux';
-import {Provider, useSelector, useDispatch} from 'react-redux';
-import reducers from '../redux/reducers';
+import {Provider} from 'react-redux';
 import initialState from '../redux/store';
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = ({navigation}) => {
   const goDetail = () => {
-    navigation.navigate('Home', {screen: 'Summary'});
+    navigation.navigate('AnaSayfa', {screen: 'Sepet'});
   };
   return (
     <Tab.Navigator>
@@ -28,18 +23,18 @@ const BottomTabNavigator = ({navigation}) => {
         name="Main"
         component={Main}
         options={{
-          headerTintColor: 'black',
+          headerTintColor: 'white',
           headerTitleAlign: 'center',
           headerTitle: 'Götür',
           headerTitleStyle: {
             fontSize: 20,
           },
           headerStyle: {
-            backgroundColor: 'white',
+            backgroundColor: '#3DDBB4',
           },
-          headerRight: ({color, size}) => (
+          headerRight: () => (
             <TouchableOpacity style={styles.headerView} onPress={goDetail}>
-              <Icon color={'green'} size={30} name="basket"></Icon>
+              <Icon color={'orange'} size={30} name="basket"></Icon>
             </TouchableOpacity>
           ),
           tabBarLabel: '',
@@ -74,7 +69,7 @@ const BottomTabNavigator = ({navigation}) => {
         options={{
           headerTintColor: 'white',
           headerTitleAlign: 'center',
-          headerTitle: 'Tamamlanan Siparişler',
+          headerTitle: 'Siparişler',
           headerTitleStyle: {
             fontSize: 20,
           },
@@ -101,34 +96,14 @@ const screenOptionStyle = {
 };
 
 const HomeStackNavigator = ({navigation}) => {
-  const options = {
-    headerShown: true,
-    headerTintColor: 'black',
-    headerTitleAlign: 'center',
-    headerTitle: 'Detail',
-    headerTitleStyle: {
-      fontSize: 20,
-    },
-    headerStyle: {
-      backgroundColor: 'white',
-    },
-    headerRight: ({color, size}) => (
-      <TouchableOpacity
-        style={styles.headerView}
-        onPress={() => navigation.navigate('Summary')}>
-        <Icon color={color} size={30} name="basket"></Icon>
-      </TouchableOpacity>
-    ),
-  };
-
   return (
     <Provider store={initialState}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={screenOptionStyle}>
-          <Stack.Screen name="Home" component={BottomTabNavigator} />
-          <Stack.Screen options={options} name="Detail" component={Detail} />
-          <Stack.Screen name="Summary" component={Summary} />
-          <Stack.Screen name="Done" component={Done} />
+          <Stack.Screen name="AnaSayfa" component={BottomTabNavigator} />
+          <Stack.Screen name="Detaylar" component={Detail} />
+          <Stack.Screen name="Sepet" component={Summary} />
+          <Stack.Screen name="Siparisler" component={Done} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

@@ -1,7 +1,7 @@
-import React, {useLayoutEffect, useState, useEffect} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import Number from '../components/number';
-import {useSelector, useDispatch} from 'react-redux';
-import {incrementByAmount, reduction, sum} from '../redux/reducers';
+import {useDispatch} from 'react-redux';
+import {incrementByAmount, reduction} from '../redux/reducers';
 import {
   Text,
   View,
@@ -11,15 +11,13 @@ import {
   Alert,
   TouchableOpacity,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconButton from '../components/iconButton';
 
 const Detail = ({route, navigation}) => {
   const dispatch = useDispatch();
 
-  const selector = useSelector(state => state.sepet.sepet);
-
-  const [number, setNumber] = useState(0);
+  const [number, setNumber] = useState(1);
 
   const {title, price, img, product} = route.params;
   const insert = () => {
@@ -33,7 +31,9 @@ const Detail = ({route, navigation}) => {
           product: product,
         }),
       );
+
       dispatch(reduction());
+      Alert.alert('Ürün Sepete Eklendi');
     } else {
       Alert.alert('Adet sayısı en az 1 olmalıdır!');
     }
@@ -41,16 +41,26 @@ const Detail = ({route, navigation}) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      headerShown: true,
+      headerTintColor: 'white',
+      headerTitleAlign: 'center',
+      headerTitle: 'Detaylar',
+      headerTitleStyle: {
+        fontSize: 20,
+      },
+      headerStyle: {
+        backgroundColor: '#3DDBB4',
+      },
       headerRight: () => (
         <TouchableOpacity
           style={styles.headerView}
-          onPress={() => navigation.navigate('Home', {screen: 'Summary'})}>
-          <Icon size={30} name="basket"></Icon>
+          onPress={() => navigation.navigate('AnaSayfa', {screen: 'Summary'})}>
+          <Icon color={'orange'} size={30} name="basket"></Icon>
         </TouchableOpacity>
       ),
     });
     return () => {
-      setNumber(0);
+      setNumber(1);
     };
   }, [navigation]);
 
@@ -75,11 +85,12 @@ const Detail = ({route, navigation}) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: 'white'},
   image: {
     width: Dimensions.get('window').width / 1.1,
-    height: Dimensions.get('window').height / 1.7,
+    height: Dimensions.get('window').height / 1.8,
     margin: 30,
   },
   main: {justifyContent: 'center', alignItems: 'center'},
@@ -88,10 +99,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+    flex: 1,
   },
   title: {
     fontSize: 22,
     color: 'black',
+    textAlign: 'left',
   },
   price: {
     textAlign: 'left',
@@ -99,12 +112,19 @@ const styles = StyleSheet.create({
     color: 'green',
   },
   texts: {
-    alignItems: 'flex-start',
     justifyContent: 'center',
+    alignSelf: 'flex-start',
+    marginLeft: Dimensions.get('window').width / 15,
   },
   product: {
     fontSize: 18,
     color: 'blue',
+    textAlign: 'left',
+  },
+  headerView: {
+    marginRight: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 export default Detail;

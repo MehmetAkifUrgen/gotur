@@ -1,12 +1,11 @@
 import React, {useEffect} from 'react';
 import {Text, View, StyleSheet, FlatList} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {plus, minus, done, delete_all, reduction} from '../redux/reducers';
 import RenderItem from '../components/renderItem';
 import IconButton from '../components/iconButton';
 
-const Summary = ({navigation}) => {
+const Summary = () => {
   useEffect(() => {
     dispatch(reduction());
   }, []);
@@ -20,7 +19,9 @@ const Summary = ({navigation}) => {
 
   const sums = useSelector(state => state.sepet.sum);
   function listFooterComponent() {
-    return <Text style={styles.listFooterText}>Toplam :{sums} </Text>;
+    if (sums != 0)
+      return <Text style={styles.listFooterText}>Toplam :{sums} </Text>;
+    else return null;
   }
 
   const sepet = useSelector(state => state.sepet.sepet);
@@ -42,20 +43,26 @@ const Summary = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        contentContainerStyle={styles.contentContainer}
-        data={sepet}
-        keyExtractor={(_, index) => index}
-        renderItem={renderItem}
-        ListFooterComponent={listFooterComponent}
-      />
-      <View style={styles.button}>
-        <IconButton
-          onPress={end_of_shopping}
-          name="basket-unfill"
-          text={'Siparişi Tamamla'}
-        />
-      </View>
+      {sepet.length === 0 ? (
+        <Text style={styles.text}>Sepetinizde hiç ürün bulunmamaktadır</Text>
+      ) : (
+        <>
+          <FlatList
+            contentContainerStyle={styles.contentContainer}
+            data={sepet}
+            keyExtractor={(_, index) => index}
+            renderItem={renderItem}
+            ListFooterComponent={listFooterComponent}
+          />
+          <View style={styles.button}>
+            <IconButton
+              onPress={end_of_shopping}
+              name="basket-unfill"
+              text={'Siparişi Tamamla'}
+            />
+          </View>
+        </>
+      )}
     </View>
   );
 };
@@ -63,12 +70,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   button: {
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 50,
+  },
+  text: {
+    fontSize: 18,
+    color: 'black',
+    textAlign: 'center',
   },
 
   contentContainer: {
@@ -79,6 +93,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: 'black',
+    marginTop: 30,
   },
 });
 

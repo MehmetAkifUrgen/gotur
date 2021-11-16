@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-
+import now from '../data/date';
 export const counterSlice = createSlice({
   name: 'sepet',
   initialState: {
@@ -7,6 +7,7 @@ export const counterSlice = createSlice({
     done: [],
     sum: 0,
     sumAll: [],
+    dateAll: [],
   },
   reducers: {
     incrementByAmount: (state, action) => {
@@ -37,6 +38,7 @@ export const counterSlice = createSlice({
     done: state => {
       state.done = [...state.done, state.sepet];
       state.sumAll.push(state.sum);
+      state.dateAll.push(now());
       state.sum = 0;
       state.sepet.map(item => {
         state.sum = parseInt(item.adet) * parseInt(item.fiyat) + state.sum;

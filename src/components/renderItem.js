@@ -23,6 +23,7 @@ const RenderItem = ({
         </Text>
         <View style={styles.bottomBody}>
           <Text style={styles.text}> {fiyat} ₺ </Text>
+
           {disabled == true ? (
             <Text>Adet : {adet}</Text>
           ) : (
@@ -44,11 +45,11 @@ const styles = StyleSheet.create({
     shadowColor: 'black',
     elevation: 4,
     borderRadius: 10,
-    margin: 10,
+    margin: 2,
   },
 
   text: {
-    fontSize: 18,
+    fontSize: 17,
     color: 'black',
     textAlign: 'left',
   },
