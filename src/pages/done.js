@@ -1,31 +1,33 @@
 import React from 'react';
 import {Text, View, FlatList, StyleSheet, Dimensions} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import ListHeaderComponent from '../components/listHeaderComponent';
+import RenderItem from '../components/renderItem';
 const Done = ({params}) => {
   const dones = useSelector(state => state.sepet.done);
   const sumAll = useSelector(state => state.sepet.sumAll);
   function ItemSeparatorComponent() {
     return <View style={styles.ItemSeparatorComponent}></View>;
   }
-  function listFooterComponent() {
-    return <Text>dasdsad</Text>;
-  }
 
   function detail_items({item}) {
     return (
-      <View style={styles.itemContainer}>
-        <Text style={styles.text}> {item.ad} </Text>
-        <Text style={styles.text}> {item.adet} </Text>
-        <Text style={styles.text}> {item.fiyat} </Text>
-      </View>
+      <RenderItem
+        image={item.image}
+        ad={item.ad}
+        product={item.product}
+        fiyat={item.fiyat}
+        adet={item.adet}
+        disabled={true}
+      />
     );
   }
   function renderItem({item, index}) {
     return (
       <View style={styles.listContainer}>
-        <Text>{index + 1}.Sipariş </Text>
-        <Text>Toplam: {sumAll[index]} </Text>
+        <Text style={styles.text}>{index + 1}.Sipariş </Text>
+        <Text style={styles.text}>
+          Toplam: <Text style={styles.priceText}> {sumAll[index]} ₺ </Text>{' '}
+        </Text>
         <FlatList
           ItemSeparatorComponent={ItemSeparatorComponent}
           data={item}
@@ -48,7 +50,7 @@ const Done = ({params}) => {
 const styles = StyleSheet.create({
   listContainer: {
     paddingLeft: 5,
-    borderWidth: 3,
+    borderWidth: 1,
     borderColor: 'black',
     margin: 20,
     borderRadius: 10,
@@ -64,16 +66,22 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   text: {
-    width: Dimensions.get('window').width / 4,
     fontSize: 18,
     color: 'black',
-    textAlign: 'center',
+    textAlign: 'left',
   },
   ItemSeparatorComponent: {
-    height: 1,
+    height: 0.5,
     backgroundColor: 'black',
+  },
+  priceText: {
+    fontSize: 20,
+    color: 'green',
+    textAlign: 'left',
+    fontWeight: 'bold',
   },
 });
 

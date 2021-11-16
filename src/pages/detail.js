@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import IconButton from '../components/iconButton';
 
 const Detail = ({route, navigation}) => {
   const dispatch = useDispatch();
@@ -23,7 +24,15 @@ const Detail = ({route, navigation}) => {
   const {title, price, img, product} = route.params;
   const insert = () => {
     if (number != 0) {
-      dispatch(incrementByAmount({ad: title, adet: number, fiyat: price}));
+      dispatch(
+        incrementByAmount({
+          ad: title,
+          adet: number,
+          fiyat: price,
+          image: img,
+          product: product,
+        }),
+      );
       dispatch(reduction());
     } else {
       Alert.alert('Adet sayısı en az 1 olmalıdır!');
@@ -57,17 +66,11 @@ const Detail = ({route, navigation}) => {
       <View style={styles.buton}>
         <Text style={styles.price}> {price}₺ </Text>
         <Number
-          onPress2={() => setNumber(number + 1)}
-          onPress1={() => (number == 0 ? null : setNumber(number - 1))}
+          plus={() => setNumber(number + 1)}
+          minus={() => (number == 0 ? null : setNumber(number - 1))}
           text={number}
         />
-        <Icon.Button
-          onPress={insert}
-          name="basket"
-          backgroundColor="#8F7321"
-          solid>
-          Insert to Your Basket
-        </Icon.Button>
+        <IconButton onPress={insert} name="basket" text={'Sepete Ekle'} />
       </View>
     </View>
   );

@@ -2,15 +2,26 @@ import React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Number = ({text, onPress1, onPress2, color}) => {
+const Number = ({text, minus, plus, color}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onPress1}>
-        <Icon color={'black'} name="minus" size={25} />
+      <TouchableOpacity onPress={minus}>
+        <Icon
+          color={'black'}
+          name={text == '1' ? 'delete' : 'minus'}
+          size={25}
+          color={'red'}
+        />
       </TouchableOpacity>
       <Text style={styles.text}>{text} </Text>
       <TouchableOpacity>
-        <Icon color={'black'} onPress={onPress2} name="plus" size={25} />
+        <Icon
+          color={'black'}
+          onPress={plus}
+          name="plus"
+          size={25}
+          color={'green'}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -26,5 +37,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 30,
+    color: 'black',
   },
 });

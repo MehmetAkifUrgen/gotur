@@ -23,32 +23,28 @@ const BottomTabNavigator = ({navigation}) => {
     navigation.navigate('Home', {screen: 'Summary'});
   };
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarInactiveBackgroundColor: '#1A8F72',
-        tabBarActiveBackgroundColor: '#CE53DB',
-      }}>
+    <Tab.Navigator>
       <Tab.Screen
         name="Main"
         component={Main}
         options={{
-          headerTintColor: 'white',
+          headerTintColor: 'black',
           headerTitleAlign: 'center',
           headerTitle: 'Götür',
           headerTitleStyle: {
             fontSize: 20,
           },
           headerStyle: {
-            backgroundColor: '#3DDBB4',
+            backgroundColor: 'white',
           },
           headerRight: ({color, size}) => (
             <TouchableOpacity style={styles.headerView} onPress={goDetail}>
-              <Icon color={'white'} size={30} name="basket"></Icon>
+              <Icon color={'green'} size={30} name="basket"></Icon>
             </TouchableOpacity>
           ),
           tabBarLabel: '',
           tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="home" color={'white'} size={size} />
+            <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
         }}
       />
@@ -67,7 +63,7 @@ const BottomTabNavigator = ({navigation}) => {
           },
           tabBarLabel: '',
           tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="basket" color={'white'} size={size} />
+            <MaterialCommunityIcons name="basket" color={color} size={size} />
           ),
         }}
       />
@@ -89,7 +85,7 @@ const BottomTabNavigator = ({navigation}) => {
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons
               name="check-all"
-              color={'white'}
+              color={color}
               size={size}
             />
           ),
